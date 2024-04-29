@@ -9,12 +9,14 @@ import {
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { styles } from "../../styles/style";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { useLoginMutation } from "../../../redux/features/auth/authApi";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 type Props = {
   setRoute: (route: string) => void;
   setOpen: (open: boolean) => void;
+  
 };
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -22,25 +24,24 @@ const schema = Yup.object().shape({
     .required("Please enter your email"),
   password: Yup.string().required("Please enter your password").min(6),
 });
-const Login: FC<Props> = ({ setRoute, setOpen }) => {
+const Login: FC<Props> = ({ setRoute, setOpen}) => {
   const [show, setShow] = useState(false);
-
   const [login, { isSuccess, error, data }] = useLoginMutation();
-
+ const {  } = useLoadUserQuery(undefined, { refetchOnMountOrArgChange: true });
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
       await login({ email, password });
-      await signIn("credentials", data);
-      console.log(data);
-      
+      // console.log()
+      // console.log(data)      
+      // await signIn("credentials",{redirect: false,credentials});      
     },
   });
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Login Sccessfuly");
+      toast.success("Login Successfully");  
       setOpen(false);
     }
     if (error) {
@@ -115,12 +116,12 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
           <FcGoogle
             size={30}
             className="cursor-pointer mr-2"
-            onClick={() => signIn("google")}
+            onClick={() => signIn("google",{redirect: false,})}
           />
           <AiFillGithub
             size={30}
             className="cursor-pointer mr-2"
-            onClick={() => signIn("github")}
+            onClick={() => signIn("github",{redirect: false,})}
           />
         </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px]">

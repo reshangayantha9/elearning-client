@@ -9,7 +9,19 @@ export const ordersApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    createOrder: builder.mutation({
+      query: ({courseId,payment_info} ) => ({
+        url: `create-order`,
+        method: "POST",
+        body:{
+          courseId,
+          payment_info
+        },
+        credentials: "include" as const,
+      }),
+    }),
   }),
+  
 });
 
-export const {useGetAllOrdersQuery} =ordersApi; 
+export const {useGetAllOrdersQuery,useCreateOrderMutation} =ordersApi; 

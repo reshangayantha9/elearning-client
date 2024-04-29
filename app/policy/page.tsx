@@ -1,22 +1,19 @@
 "use client";
 import React, { FC, useState } from "react";
-import Heading from "./utils/Heading";
-import Header from "./components/Header";
-import Hero from "./components/Route/Hero";
-import Courses from "./components/Route/Courses";
-import Reviews from "./components/Route/Reviews";
-import FAQ from "./FAQ/FAQ";
-import Footer from "./components/Footer";
+import Heading from "../utils/Heading";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Policy from './Policy';
 interface Props {}
 
 const Page: FC<Props> = (props) => {
   const [open, setOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
+  const [activeItem, setActiveItem] = useState(2);
   const [route, setRoute] = useState("Login");
   return (
-    <div>
+    <div  className="min-h-screen">
       <Heading
-        title="ELearning"
+        title="POLICY - ELearning"
         description="ELearning is a platform for students to learn and get help from teachers"
         keywords="Programming,MERN,Redux"
       />
@@ -27,10 +24,8 @@ const Page: FC<Props> = (props) => {
         setRoute={setRoute}
         route={route}
       />
-      <Hero />
-      <Courses/>
-      <Reviews/>
-      <FAQ/>
+      <br />
+      <Policy/>
       <Footer/>
     </div>
   );

@@ -21,7 +21,7 @@ const CustomModel:FC<Props> = ({open,setOpen,setRoute,component:Component}) => {
         <Box
         className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[95%] m-auto  800px:w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none MuiBox-root css-0"
         >
-            <Component setOpen={setOpen} setRoute={setRoute}/>
+            <Component setOpen={setOpen} setRoute={setRoute} />
         </Box>
     </Modal>
   )

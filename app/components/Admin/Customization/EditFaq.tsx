@@ -38,16 +38,29 @@ const EditFaq = (props: Props) => {
       prevQuestion.map((q) => (q._id === id ? { ...q, active: !q.active } : q))
     );
   };
-  const handleQuestionChange = (id: any, value: string) => {
-    setQuestions((prevQuestion) =>
-      prevQuestion.map((q) => (q._id === id ? { ...q, question: value } : q))
-    );
+  const handleQuestionChange = (index:number, value: string) => {
+    // setQuestions((prevQuestion) =>
+    //   prevQuestion.map((q) => (q._id === id ? { ...q, question: value } : q))
+    // );
+    const updatedQuestions=[...questions];
+    updatedQuestions[index].question=value;
+    setQuestions(updatedQuestions);
+
   };
-  const handleAnswerChange = (id: any, value: string) => {
-    setQuestions((prevQuestion) =>
-      prevQuestion.map((q) => (q._id === id ? { ...q, answer: value } : q))
-    );
+  const handleAnswerChange = (index:number, value: string) => {
+    // setQuestions((prevQuestion) =>
+    //   prevQuestion.map((q) => (q._id === id ? { ...q, answer: value } : q))
+    // );
+    const updatedAnswer=[...questions];
+    updatedAnswer[index].answer=value;
+    setQuestions(updatedAnswer)
+
   };
+  const handleDelete=(index:number)=>{
+    const updatedQuestions=[...questions];
+    updatedQuestions.splice(index,1);
+    setQuestions(updatedQuestions);
+  }
   const newFaqHandler = () => {
     setQuestions([
       ...questions,
@@ -85,9 +98,9 @@ const EditFaq = (props: Props) => {
         <div className="w-[90%] 800px:w-[80%] m-auto mt-[120px]">
           <div className="mt-12">
             <dl className="space-y-8">
-              {questions.map((q: any) => (
+              {questions.map((q: any,index:number) => (
+                // eslint-disable-next-line react/jsx-key
                 <div
-                  key={q._id}
                   className={`${
                     q._id !== questions[0]?._id && "border-t"
                   } border-gray-200 pt-6`}
@@ -101,7 +114,7 @@ const EditFaq = (props: Props) => {
                         className={`${styles.input} border-none`}
                         value={q.question}
                         onChange={(e: any) =>
-                          handleQuestionChange(q._id, e.target.value)
+                          handleQuestionChange(index, e.target.value)
                         }
                         placeholder={"Add your question..."}
                       />
@@ -120,7 +133,7 @@ const EditFaq = (props: Props) => {
                         className={`${styles.input} border-none`}
                         value={q.answer}
                         onChange={(e: any) =>
-                          handleAnswerChange(q._id, e.target.value)
+                          handleAnswerChange(index, e.target.value)
                         }
                         placeholder="Add your answer"
                       />
@@ -128,9 +141,10 @@ const EditFaq = (props: Props) => {
                         <AiOutlineDelete
                           className="dark:text-white text-black text-[18px] cursor-pointer"
                           onClick={() => {
-                            setQuestions((prevQuestions) =>
-                              prevQuestions.filter((item) => item._id !== q._id)
-                            );
+                            // setQuestions((prevQuestions) =>
+                            //   prevQuestions.filter((item) => item._id !== q._id)
+                            // );
+                            handleDelete(index);
                           }}
                         />
                       </span>

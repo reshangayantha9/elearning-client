@@ -19,7 +19,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
   const { data: usersData } = useGetAllUsersQuery({});
   const { data: coursesData } = useGetAllCoursesQuery({});
   const [orderData, setOrderData] = useState<any>([]);
-
+  
   useEffect(() => {
     if (data) {
       const temp = data?.orders?.map((item: any) => {
@@ -70,7 +70,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
         ]),
   ];
   const rows: any = [];
-
+  console.log(orderData)
   orderData && orderData.forEach((item:any)=>{
     rows.push({
         id:item._id,

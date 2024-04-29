@@ -33,13 +33,16 @@ const EditCategories = (props: Props) => {
       }
     }
   }, [data, isSuccess, error]);
-  const handleCategoriesAdd = (id: any, value: string) => {
+  const handleCategoriesAdd = (index:number, value: string) => {
     // setCategories((prevCategory: any) =>
     //   prevCategory.map((i:any) => (i._id === id ? { ...i, title: value } : i))
     // );
-    setCategories((prevCategory: any[]) =>
-      prevCategory.map((i: any) => (i._id === id ? { ...i, title: value } : i))
-    );
+    const updatedCategories=[...categories]
+    updatedCategories[index].title=value;
+    setCategories(updatedCategories)
+    // setCategories((prevCategory: any[]) =>
+    //   prevCategory.map((i: any) => (i._id === id ? { ...i, title: value } : i))
+    // );
   };
   const newCategoriesHandler = () => {
     // if (categories[categories.length - 1].title === "") {
@@ -48,6 +51,11 @@ const EditCategories = (props: Props) => {
     //   setCategories((prevCategory: any) => [...prevCategory, { title: "" }]);
     // }
     setCategories((prevCategory: any) => [...prevCategory, { title: "" }]);
+  };
+  const handleDeleteCategory = (index: number) => {
+    const updatedCategories = [...categories];
+    updatedCategories.splice(index, 1); // Remove the item at the specified index
+    setCategories(updatedCategories);
   };
   const areCategoriesUnchanged = (
     originalCategories: any[],
@@ -85,7 +93,7 @@ const EditCategories = (props: Props) => {
                       className={`${styles.input} !w-[unset] !border-none !text-[20px]`}
                       value={item.title}
                       onChange={(e) =>
-                        handleCategoriesAdd(item._id, e.target.value)
+                        handleCategoriesAdd(index, e.target.value)
                       }
                       placeholder="Enter Category title ..."
                     />
@@ -97,9 +105,10 @@ const EditCategories = (props: Props) => {
                         // }else{
                         //     ()=>null
                         // }
-                        setCategories((prevCategory: any) =>
-                          prevCategory.filter((i: any) => i._id !== item._id)
-                        );
+                        // setCategories((prevCategory: any) =>
+                        //   prevCategory.filter((i: any) => i._id !== item._id)
+                        // );
+                        handleDeleteCategory(index)
                       }}
                     />
                   </div>

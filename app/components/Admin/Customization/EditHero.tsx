@@ -35,15 +35,15 @@ const EditHero: FC<Props> = (props: Props) => {
   }, [data,isSuccess,error]);
 
   const handleUpdate = (e: any) => {
-    const file =e.target.file?.[0];
-    if(file){
-        const reader =new FileReader();
-        reader.onload=(e:any)=>{
-            if(reader.readyState ===2){
-                setImage(e.target.result as string)
+    const file = e.target.files?.[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            if (reader.readyState === 2) {
+                setImage(e.target.result as string);
             }
-        }
-        reader.readAsDataURL(file)
+        };
+        reader.readAsDataURL(file);
     }
   };
   const handleEdit =async () => {

@@ -11,13 +11,6 @@ export const apiSlice = createApi({
     baseUrl: process.env.NEXT_PUBLIC_SERVER_URI,
   }),
   endpoints: (builder) => ({
-    // refreshToken: builder.query({
-    //   query: (data) => ({
-    //     url: "refresh",
-    //     method: "GET",
-    //     credentials: "include" as const,
-    //   }),
-    // }),
     loadUser: builder.query({
       query: (data) => ({
         url: "me",
@@ -33,6 +26,7 @@ export const apiSlice = createApi({
               user: result.data.user,
             })
           );
+          console.log(result.data.user)
         } catch (error: any) {
           console.log(error);
         }

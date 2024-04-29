@@ -10,10 +10,16 @@ import Signup from "./Auth/Signup";
 import Verification from "./Auth/Verification";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import avatar from '../../public/assets/avatar.jpg'
+import avatar from "../../public/assets/avatar.jpg";
 import { useSession } from "next-auth/react";
-import { useLogOutQuery, useSocialAuthMutation } from "../../redux/features/auth/authApi";
+import {
+  useLogOutQuery,
+  useSocialAuthMutation,
+} from "../../redux/features/auth/authApi";
 import toast from "react-hot-toast";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import { useGridPrivateApiContext } from "@mui/x-data-grid/internals";
+import { userAgent } from "next/server";
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -25,29 +31,38 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
+  // const {
+  //   data:userData,
+  //   isLoading,
+  //   refetch,
+  // } = useLoadUserQuery(undefined, { refetchOnMountOrArgChange: true });
   const { user } = useSelector((state: any) => state.auth);
-  const {data}=useSession();
-  const [socialAuth,{isSuccess,error}]=useSocialAuthMutation();
+  const { data, update } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
   const [logout, setLogout] = useState(false);
   const {} = useLogOutQuery(undefined, {
     skip: logout ? true : false,
   });
-  useEffect(()=>{
-    if(!user){
-      if(data){
-        socialAuth({email:data?.user?.email,name:data?.user?.name,avatar:data?.user?.image})
+  useEffect(() => {
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image,
+        });
+      }
+    if (data === null) {
+      if (isSuccess) {
+        toast.success("Login Successful");
       }
     }
-    if(data === null){
-      if(isSuccess){
-        toast.success("Login Successful")
-      }
-      
+  
+    if(data ===null && !user){
+      setLogout(true)
     }
-    // if(data ===null){
-    //   setLogout(true)
-    // }
-  },[data,user])
+  }
+  }, [data,user]);
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -99,16 +114,17 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 />
               </div>
               {user ? (
-                <Link
-                href={"/profile"}>
-                <Image
-                  src={user.avatar ? user.avatar.url :avatar }
-                  alt=""
-                  width={30}
-                  height={30}
-                  className="w-[30px] h-[30px] rounded-full cursor-pointer"
-                  style={{border:activeItem ===5 ?"2px solid #37a39a":"none"}}
-                />
+                <Link href={"/profile"}>
+                  <Image
+                    src={user.avatar ? user.avatar.url : avatar}
+                    alt=""
+                    width={30}
+                    height={30}
+                    className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                    style={{
+                      border: activeItem === 5 ? "2px solid #37a39a" : "none",
+                    }}
+                  />
                 </Link>
               ) : (
                 <HiOutlineUserCircle
