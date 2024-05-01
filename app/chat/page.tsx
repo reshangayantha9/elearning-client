@@ -6,10 +6,11 @@ import Footer from "../components/Footer";
 import OpenAI from "openai";
 import axios from "axios";
 import toast from "react-hot-toast";
+
 interface Props {}
 
 const openai = new OpenAI({
-  apiKey: "sk-proj-Fvfzvggdj7uoALeWAil1T3BlbkFJFHNIoWTKYn5fM27Mx3TQ",
+  apiKey:process.env.OPENAI_PUBLIC_KEY ,
   dangerouslyAllowBrowser: true,
 });
 
