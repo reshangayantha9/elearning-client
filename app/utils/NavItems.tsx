@@ -17,6 +17,10 @@ export const navItemData = [
     name: "FAQ",
     url: "/faqs",
   },
+  {
+    name:"GPT AI",
+    url:"/chat"
+  }
 ];
 type Props = {
   activeItem: number;
