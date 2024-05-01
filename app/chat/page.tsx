@@ -70,7 +70,7 @@ const Page: FC<Props> = (props) => {
       <div className="bg-white dark:bg-slate-900 min-h-screen flex flex-col justify-center items-center ">
         <div className="w-full max-w-screen-md p-4 rounded-lg shadow-md">
           <div className="mb-4">
-            <div className="text-4xl font-bold dark:text-white text-black">GPT Assistant</div>
+            <div className="text-4xl font-bold dark:text-white text-black">GPT Assistant </div>
             <p className="text-gray-600 text-lg dark:text-white text-black">
               Welcome to ELearnig AI powered assistant. Ask me anything!!!
             </p>
